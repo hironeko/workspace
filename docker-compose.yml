@@ -1,9 +1,35 @@
 version: '2'
 
-services: 
+services:
+
+  applications:
+    image: tianon/true
+    volumes:
+      - ./workspace:/var/www
+
+  node:
+    build:
+      context: ./docker/language/js
+    # container_name: nodejs
+    # networks:
+    #   - frontend
+    #   - backend
+
+  nginx:
+    build:
+      context: ./docker/middleware/nginx
+    # container_name: nginx
+    # volumes:
+    #   - ./workspace/php:/usr/share/nginx/html
+    ports:
+      - "9000:80"
+    networks:
+        - frontend
+        - backend
+
   mysql:
     build:
-      context: ./database/mysql
+      context: ./docker/database/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -15,6 +41,14 @@ services:
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_PORT}:3306"
+
+### Networks Setup ############################################
+
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"
 
 volumes:
   mysql:
