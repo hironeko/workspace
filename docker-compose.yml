@@ -5,7 +5,7 @@ services:
   applications:
     image: tianon/true
     volumes:
-      - ./workspace:/var/www
+      - ./workspace/php:/var/www
 
   node:
     build:
@@ -19,13 +19,14 @@ services:
     build:
       context: ./docker/middleware/nginx
     # container_name: nginx
-    # volumes:
-    #   - ./workspace/php:/usr/share/nginx/html
+    volumes:
+      - ./docker/middleware/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./workspace/php:/var/www/html
     ports:
-      - "9000:80"
-    networks:
-        - frontend
-        - backend
+      - "80:80"
+    # networks:
+    #     - frontend
+    #     - backend
 
   mysql:
     build:
