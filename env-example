@@ -4,7 +4,6 @@ DATA_SAVE_PATH=./db/data/mysql
 
 ### MySQL ###
 
-MYSQL_VERSION=8.0
 MYSQL_DATABASE=default
 MYSQL_USER=default
 MYSQL_PASSWORD=secret

@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+
+  php:
+    build:
+      context: ./docker/language/php
+    volumes:
+      - ./workspace/php:/var/www/html
+
+  nginx:
+    build:
+      context: ./docker/middleware/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    volumes:
+      - ./docker/middleware/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+
+  # mysql:
+  #   build:
+  #     context: ./docker/database/mysql
+  #   environment:
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #   volumes:
+  #     - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
+  #     - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+  #   ports:
+  #     - "${MYSQL_PORT}:3306"

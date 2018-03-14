@@ -2,11 +2,6 @@ version: '2'
 
 services:
 
-  # applications:
-  #   image: tianon/true
-  #   volumes:
-  #     - ./workspace/php:/var/www
-
   php:
     build:
       context: ./docker/language/php
