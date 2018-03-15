@@ -20,6 +20,35 @@ $ cp env.example .env
 
 ## use php + nginx
 $ docker-compose -f docker-compose.php.yml up -d php nginx
+
+## use elixir + node v8.9.4
+$ docker-compose -f docker-compose.elixir up -d elixir
+
+# use host mysql
+# DB host name (case mac)
+# host naem is "docker.for.mac.localhost"
+```
+
+## Where working directory?
+
+The working directory is the folder for each language in the workspace derectory.
+
+```shell
+├── README.md
+├── db
+│   └── data
+├── docker
+│   ├── database
+│   ├── language
+│   └── middleware
+├── docker-compose.elixir.yml
+├── docker-compose.php.yml
+├── docker-compose.yml
+├── env-example
+└── workspace
+    ├── elixir
+    ├── php
+    └── ruby
 ```
 
 
