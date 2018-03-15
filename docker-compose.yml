@@ -1,9 +1,44 @@
 version: '2'
 
-services: 
+services:
+
+  php:
+    build:
+      context: ./docker/language/php
+    # volumes_from:
+      # - applications
+    volumes:
+      - ./workspace/php:/var/www/html
+    
+  # node:
+  #   build:
+  #     context: ./docker/language/js
+    # container_name: nodejs
+    # networks:
+    #   - frontend
+    #   - backend
+  
+
+  nginx:
+    build:
+      context: ./docker/middleware/nginx
+    # container_name: nginx
+    # volumes_from:
+    #   - applications
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    volumes:
+      - ./docker/middleware/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./workspace/php:/var/www/html
+    # networks:
+    #     - frontend
+    #     - backend
+
   mysql:
     build:
-      context: ./database/mysql
+      context: ./docker/database/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -16,6 +51,14 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
 
-volumes:
-  mysql:
-    driver: "local"
+### Networks Setup ############################################
+
+# networks:
+#   frontend:
+#     driver: "bridge"
+#   backend:
+#     driver: "bridge"
+
+# volumes:
+#   mysql:
+#     driver: "local"

@@ -8,7 +8,7 @@ This Project is NoName
 ## Requirements
 - Git
 - Docker
-- Docker-Compoe
+- Docker-Compose
 
 
 ## Installation
@@ -17,7 +17,9 @@ This Project is NoName
 $ git clone https://github.com/hironeko/projectX.git
 $ cd projectX
 $ cp env.example .env
-$ docker-compose up -d mysql
+
+## use php + nginx
+$ docker-compose -f docker-compose.php.yml up -d php nginx
 ```
 
 
