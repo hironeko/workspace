@@ -1,0 +1,6 @@
+version: "2"
+
+services:
+  js:
+    build: .
+      # context: ./docker/language/js
