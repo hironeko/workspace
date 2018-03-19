@@ -18,11 +18,11 @@ $ git clone https://github.com/hironeko/projectX.git
 $ cd projectX
 $ cp env.example .env
 
-## use php + nginx
-$ docker-compose -f docker-compose.php.yml up -d php nginx
+## .env change language
+LANGUAGE=php
 
-## use elixir + node v8.9.4
-$ docker-compose -f docker-compose.elixir up -d elixir
+# build php
+$ docker-compose build app nginx
 
 # use host mysql
 # DB host name (case mac)
@@ -31,7 +31,7 @@ $ docker-compose -f docker-compose.elixir up -d elixir
 
 ## Where working directory?
 
-The working directory is the folder for each language in the workspace derectory.
+The working directory is the folder for each language in the workspace directory.
 
 ```shell
 ├── README.md
@@ -41,8 +41,6 @@ The working directory is the folder for each language in the workspace derectory
 │   ├── database
 │   ├── language
 │   └── middleware
-├── docker-compose.elixir.yml
-├── docker-compose.php.yml
 ├── docker-compose.yml
 ├── env-example
 └── workspace

@@ -1,6 +1,10 @@
+### Select lang ###
+
+LANGUAGE=php or js or elixir or ruby
+
 ### Data Path ###
 
-DATA_SAVE_PATH=./db/data/mysql
+MYSQL_DATA_SAVE_PATH=./db/data/mysql
 
 ### MySQL ###
 
