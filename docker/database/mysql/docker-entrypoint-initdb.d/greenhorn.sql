@@ -9,8 +9,10 @@ CREATE USER 'your_name'@'localhost' IDENTIFIED BY 'your_password';
 GRANT ALL PRIVILEGES ON database_name.* TO 'your_name'@'localhost';
 */
 
+-- CREATE USER 'greenhorn'@'' IDENTIFIED BY 'greenHorn1?';
+
 CREATE DATABASE IF NOT EXISTS greenhorn COLLATE 'utf8_general_ci';
 
 -- CREATE USER 'greenhorn'@'localhost' IDENTIFIED BY 'greenHorn1?';
 
-GRANT ALL ON greenhorn.* TO 'greenhorn'@'localhost' IDENTIFIED BY 'greenHorn1?';
+GRANT ALL ON greenhorn.* TO greenhorn@'%' IDENTIFIED BY 'greenHorn1?' WITH GRANT OPTION;
