@@ -1,68 +1,62 @@
-version: '2'
+version: '3'
 
 services:
-
-  # node:
-  #   build:
-  #     context: ./docker/language/js
-
-  # elixir:
-  #   build:
-  #     context: ./docker/language/elixir
-  #   volumes:
-  #     - ./workspace/elixir:/var/www/app
-  #   ports:
-  #     - "4000:4000"
-    # tty: true
-
-  # ruby:
-  #   build:
-  #     context: ./docker/language/ruby
-  #   volumes:
-  #     - ./workspace/ruby:/var/www/html
-    # tty: true
   app:
-    extends:
-      file: ./docker/language/${LANGUAGE}/${LANGUAGE}.yml
-      service: ${LANGUAGE}
+    build:
+      context: ./docker/language/${LANGUAGE}
+    container_name: ${LANGUAGE}_container
     volumes:
       - ./workspace/${LANGUAGE}:/var/www/app
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.10
 
   nginx:
     build:
       context: ./docker/middleware/nginx
-    # volumes_from:
-    #   - applications
+    container_name: nginx_container
     ports:
-      - "80:80"
+      - 80:80
     depends_on:
       - app
     volumes:
-      - ./docker/middleware/nginx/conf.d/${LANGUAGE}.conf:/etc/nginx/conf.d/default.conf
+      - ${NGINX_CONF_PATH}/${LANGUAGE}.conf:/etc/nginx/conf.d/${LANGUAGE}.conf
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.2
 
   mysql:
     build:
       context: ./docker/database/mysql
+    container_name: mysql_container
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      # - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ${MYSQL_DATA_SAVE_PATH}/mysql:/var/lib/mysql
+      - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
-      - "${MYSQL_PORT}:3306"
+      - ${MYSQL_PORT}:3306
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.3
+
+  redis:
+    build:
+      context: ./docker/middleware/redis
+    container_name: redis_container
+    networks:
+      app_net:
+        ipv4_address: 172.30.0.4
 
 ### Networks Setup ############################################
 
-# networks:
-#   frontend:
-#     driver: "bridge"
-#   backend:
-#     driver: "bridge"
-
-# volumes:
-#   mysql:
-#     driver: "local"
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24
