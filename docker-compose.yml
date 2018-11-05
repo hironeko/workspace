@@ -4,7 +4,6 @@ services:
   app:
     build:
       context: ./docker/language/${LANGUAGE}
-    container_name: ${LANGUAGE}_container
     volumes:
       - ./workspace/${LANGUAGE}:/var/www/app
     networks:
@@ -14,7 +13,6 @@ services:
   nginx:
     build:
       context: ./docker/middleware/nginx
-    container_name: nginx_container
     ports:
       - 80:80
     depends_on:
@@ -28,7 +26,6 @@ services:
   mysql:
     build:
       context: ./docker/database/mysql
-    container_name: mysql_container
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -46,7 +43,6 @@ services:
   redis:
     build:
       context: ./docker/middleware/redis
-    container_name: redis_container
     networks:
       app_net:
         ipv4_address: 172.30.0.4
