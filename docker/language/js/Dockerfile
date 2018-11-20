@@ -1,2 +1,6 @@
-FROM node:8.9.4-alpine
+FROM node:carbon-alpine
+
+RUN apk update && apk --no-cache zsh \
+    && npm i -g yarn
+
 CMD ["node"]

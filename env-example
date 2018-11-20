@@ -1,10 +1,12 @@
 ### Select lang ###
 
-LANGUAGE=php or js or elixir or ruby
+LANGUAGE=php
 
-### Data Path ###
+### Path ###
 
-MYSQL_DATA_SAVE_PATH=./db/data/mysql
+NGINX_CONF_PATH=./docker/middleware/nginx/conf.d
+
+DATA_SAVE_PATH=./data
 
 ### MySQL ###
 
@@ -13,4 +15,4 @@ MYSQL_USER=default
 MYSQL_PASSWORD=secret
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
-MYSQL_ENTRYPOINT_INITDB=./database/mysql/docker-entrypoint-initdb.d
+MYSQL_ENTRYPOINT_INITDB=./docker/database/mysql/docker-entrypoint-initdb.d

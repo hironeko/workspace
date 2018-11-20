@@ -1,13 +1,10 @@
 FROM nginx:1.13.9-alpine
 
 RUN apk update \
-    && apk upgrade \
-    && apk add --no-cache bash
+    && apk add --no-cache zsh
 
-# CMD ["nginx"]
-
-# CMD ["usr/share/nginx/sbin/nginx", "-g", "daemon off;"]
+RUN rm /etc/nginx/conf.d/default.conf 
 
 CMD ["nginx", "-g", "daemon off;"]
 
-EXPOSE 80
+EXPOSE 80 443
