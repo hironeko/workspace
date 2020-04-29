@@ -2,13 +2,14 @@ version: "3"
 
 services:
   app:
-    build:
-      context: ./docker/language/${LANGUAGE}
+    image: hironeko/php7.4-fpm-alpine3.11
+    # build:
+    #   context: ./docker/language/${LANGUAGE}
     volumes:
       - ./workspace/${LANGUAGE}:/var/www/app
-    networks:
-      app_net:
-        ipv4_address: 172.30.0.10
+    # networks:
+    #   app_net:
+    #     ipv4_address: 172.30.0.10
 
   nginx:
     build:
@@ -20,9 +21,9 @@ services:
     volumes:
       - ${NGINX_CONF_PATH}/${LANGUAGE}.conf:/etc/nginx/conf.d/${LANGUAGE}.conf
       - ./workspace/${LANGUAGE}:/var/www/app
-    networks:
-      app_net:
-        ipv4_address: 172.30.0.2
+    # networks:
+    #   app_net:
+    #     ipv4_address: 172.30.0.2
 
   mysql:
     build:
@@ -37,16 +38,16 @@ services:
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - ${MYSQL_PORT}:3306
-    networks:
-      app_net:
-        ipv4_address: 172.30.0.3
+    # networks:
+    #   app_net:
+    #     ipv4_address: 172.30.0.3
 
-  redis:
-    build:
-      context: ./docker/middleware/redis
-    networks:
-      app_net:
-        ipv4_address: 172.30.0.4
+  # redis:
+  #   build:
+  #     context: ./docker/middleware/redis
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.30.0.4
 
 ### Networks Setup ############################################
 
