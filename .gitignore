@@ -1,6 +1,4 @@
 /data
 .env
-workspace/php/*
-workspace/js/*
-workspace/ruby/*
-workspace/elixir/*
+workspace/*
+!.gitkeep
