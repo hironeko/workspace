@@ -1,6 +1,6 @@
-FROM golang:1.11.2-alpine
+FROM golang:1.16rc1-buster
 
-RUN apk update \
-    && apk --no-cache git zsh vim 
+RUN apt-get update \
+    && apt-get -y install git zsh vim 
 
 EXPOSE 5000
