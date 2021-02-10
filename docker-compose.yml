@@ -41,7 +41,19 @@ services:
     # networks:
     #   app_net:
     #     ipv4_address: 172.30.0.3
-
+  
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+  
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data/metabase:/mnt/data
   # redis:
   #   build:
   #     context: ./docker/middleware/redis
